@@ -1,21 +1,19 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import addSuperHero from "./reducers/addSuperHeroSlice";
-import {superHeroAPI} from "../services/SuperHeroService";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import currenciesConverterSlice from "./reducers/currenciesConverterSlice";
+import { currencyExchangeApi } from "../services/CurrencyExchangeService";
 
 const rootReducer = combineReducers({
-  [superHeroAPI.reducerPath]: superHeroAPI.reducer,
-  addSuperHero
-})
+  [currencyExchangeApi.reducerPath]: currencyExchangeApi.reducer,
+  currenciesConverterSlice,
+});
 
-export const setupStore = () => {
-  return configureStore({
+export const setupStore = () =>
+  configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware)=>{
-      return getDefaultMiddleware().concat(superHeroAPI.middleware)
-    }
-  })
-}
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(currencyExchangeApi.middleware),
+  });
 
-export type RootStateType = ReturnType<typeof rootReducer>
-export type AppStoreType = ReturnType<typeof setupStore>
-export type AppDispatchType = AppStoreType['dispatch']
+export type RootStateType = ReturnType<typeof rootReducer>;
+export type AppStoreType = ReturnType<typeof setupStore>;
+export type AppDispatchType = AppStoreType["dispatch"];
