@@ -720,6 +720,10 @@ const CurrencyConverter = () => {
 
   const handleChangeSecondSelect = (event: SelectChangeEvent) => {
     if(data) {
+      const secondSelectValue = data[event.target.value].value / firstCurrencySelectValue.value
+
+      dispatch(setSecondCurrencyInputValue((secondSelectValue *  parseFloat(firstCurrencyInputValue)).toString() ))
+
       dispatch(setSecondCurrencySelectValue(data[event.target.value]))
     }
 
@@ -737,12 +741,6 @@ const CurrencyConverter = () => {
     }
   },[firstCurrencySelectValue])
 
-
-  useEffect(()=>{
-    if(data && firstCurrencySelectValue && secondCurrencySelectValue){
-      handleChangeSecondCurrencyInput(secondCurrencyInputValue);
-    }
-  },[secondCurrencySelectValue])
 
 
 
