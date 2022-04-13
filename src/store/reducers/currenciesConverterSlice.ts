@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {ICurrencyRatio} from "../../models/ICurrencyRatio";
 
 interface IInitialState {
-  firstCurrencySelectValue: ICurrencyRatio | null,
-  firstCurrencyInputValue: number,
+  firstCurrencySelectValue: ICurrencyRatio,
+  firstCurrencyInputValue: string,
   secondCurrencySelectValue: ICurrencyRatio | null,
-  secondCurrencyInputValue: number
+  secondCurrencyInputValue: string
 }
 
 const initialState: IInitialState = {
@@ -13,9 +13,9 @@ const initialState: IInitialState = {
     code: "UAH",
     value: 1
   },
-  firstCurrencyInputValue: 1,
+  firstCurrencyInputValue: '100',
   secondCurrencySelectValue: null,
-  secondCurrencyInputValue: 1
+  secondCurrencyInputValue: '1'
 
 };
 
@@ -26,14 +26,27 @@ export const currenciesConverterSlice = createSlice({
     setFirstCurrencySelectValue: (state, action: PayloadAction<ICurrencyRatio>) => {
       state.firstCurrencySelectValue = action.payload;
     },
-    setFirstCurrencyInputValue: (state, action: PayloadAction<number>) => {
+    setFirstCurrencyInputValue: (state, action: PayloadAction<string>) => {
       state.firstCurrencyInputValue = action.payload;
     },
     setSecondCurrencySelectValue: (state, action: PayloadAction<ICurrencyRatio>) => {
       state.secondCurrencySelectValue = action.payload;
     },
-    setSecondCurrencyInputValue: (state, action: PayloadAction<number>) => {
+    setSecondCurrencyInputValue: (state, action: PayloadAction<string>) => {
       state.secondCurrencyInputValue = action.payload;
+    },
+    handleReverseConversation: (state, action: PayloadAction<void>) => {
+      const firstCurrency = JSON.parse(JSON.stringify({
+        firstCurrencyInputValue: state.firstCurrencyInputValue,
+        firstCurrencySelectValue:  state.firstCurrencySelectValue
+      }))
+
+      state.firstCurrencySelectValue = state.secondCurrencySelectValue as ICurrencyRatio;
+      state.firstCurrencyInputValue = state.secondCurrencyInputValue;
+
+      state.secondCurrencySelectValue = firstCurrency.firstCurrencySelectValue;
+      state.secondCurrencyInputValue = firstCurrency.firstCurrencyInputValue
+
     }
 
 

@@ -22,7 +22,7 @@ export const currencyExchangeApi = createApi({
       query: ({ baseCurrency }) => ({
         url: "/latest",
         params: {
-          //apikey: apiKey,
+          apikey: apiKey,
           base_currency: baseCurrency,
         },
       }),
